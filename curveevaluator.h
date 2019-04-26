@@ -17,6 +17,13 @@ public:
 							   const bool& wrap_control_points) const = 0;
 	static float s_fFlatnessEpsilon;
 	static int s_iSegCount;
+
+	static void displayBezier(Point v0, Point v1, Point v2, Point v3, int depth, std::vector<Point>& evaluatePoints, const float& fAniLength);
+	virtual bool flatEnough(Point v0, Point v1, Point v2, Point v3);
+
+	static void setFlatThresh(float flatth);
+
+	static float flatThreshhold;
 };
 
 

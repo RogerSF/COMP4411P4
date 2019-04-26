@@ -29,6 +29,12 @@ public:
 	float y;
 };
 
+Point & operator+(const Point & first, const Point & second);
+Point & operator-(const Point & first, const Point & second);
+Point & operator*(const Point & point, const float& f);
+Point & operator*(const float& f, const Point & point);
+Point & operator/(const Point & point, const float& f);
+
 std::ostream& operator<<(std::ostream& output_stream, const Point& point);
 std::istream& operator>>(std::istream& input_stream, Point& point);
 

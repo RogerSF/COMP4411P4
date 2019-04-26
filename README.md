@@ -4,14 +4,14 @@ COMP4411 Project 4 Animator
 Requirements
 Here is a summary of the requirements for this project:
 Implement the following curve types with support for wrapping:
-- [] Bézier (splined together with C0 continuity)
-- [] B-spline
-- [] Catmull-Rom
+- [X] Bézier (splined together with C0 continuity)
+- [X] B-spline
+- [X] Catmull-Rom
 - [] Implement a particle system that is integrated with your model in some way.
 Bells and Whistles
  [] :notes: Enhance the required spline options. Some of these will require alterations to the user interface, which is somewhat complicated to understand.  If you want to access mouse events in the graph window, look at the handle function in the GraphWidget class.  Also, look at the Curve class to see what control point manipulation functions are already provided.  These could be helpful, and will likely give you a better understanding of how to modify or extend your program's behavior.  A maximum of 3 whistles will be given out in this category.
 
-- [] Let the user control the tension of the Catmull-Rom spline
+- [X] Let the user control the tension of the Catmull-Rom spline
 - [] Implement higher degree polynomial splines (ones that are C3 or C4 continuous)
 - [] Implement one of the standard subdivision curves (e.g., Lane-Riesenfeld or Dyn-Levin-Gregory).
 - [] Allow the user to specify the derivatives at the two endpoints of your C2 interpolating curves.

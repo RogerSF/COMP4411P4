@@ -25,7 +25,12 @@
 #include "GraphWidget.h"
 
 #include "LinearCurveEvaluator.h"
- 
+ #include "BezierCurveEvaluator.h"
+#include "BSplineCurveEvaluator.h"
+#include "CatmullRomSplinesEvaluator.h"
+#include "C2InterpolatingCurveEvaluator.h"
+
+using namespace std;
 
 #define LEFT		1
 #define MIDDLE		2
@@ -116,11 +121,11 @@ m_flcCurrCurve(FL_BLACK)
 	m_ppceCurveEvaluators[CURVE_TYPE_LINEAR] = new LinearCurveEvaluator();
 
 	// TODO: replace the linear evaluator for one of the three types of curves
-	m_ppceCurveEvaluators[CURVE_TYPE_BSPLINE] = new LinearCurveEvaluator();
-	m_ppceCurveEvaluators[CURVE_TYPE_BEZIER] = new LinearCurveEvaluator();
-	m_ppceCurveEvaluators[CURVE_TYPE_CATMULLROM] = new LinearCurveEvaluator();
+	m_ppceCurveEvaluators[CURVE_TYPE_BSPLINE] = new BSplineCurveEvaluator();
+	m_ppceCurveEvaluators[CURVE_TYPE_BEZIER] = new BezierCurveEvaluator();
+	m_ppceCurveEvaluators[CURVE_TYPE_CATMULLROM] = new CatmullRomSplinesEvaluator();
 	// Note that C2-Interpolating curve is not a requirement
-	m_ppceCurveEvaluators[CURVE_TYPE_C2INTERPOLATING] = new LinearCurveEvaluator();
+	m_ppceCurveEvaluators[CURVE_TYPE_C2INTERPOLATING] = new C2InterpolatingCurveEvaluator();
 
 }
 
@@ -590,7 +595,6 @@ void GraphWidget::selectAddCtrlPt(const int iMouseX, const int iMouseY)
 				}
 			}
 		}
-
 		// add a new control point to the current curve
 		m_pcrvvCurves[m_iCurrCurve]->addControlPoint(ptMouseInCurveCoord);
 		Point ptDummy;
@@ -639,7 +643,6 @@ void GraphWidget::dragCtrlPt(const int iMouseX, const int iMouseY)
 			m_pcrvvCurves[iCurve]->moveControlPoints(m_ivvCurrCtrlPts[iCurve], ptOffset,
 				m_cdvCurveDomains[iCurve].minimum(), m_cdvCurveDomains[iCurve].maximum());
 		}
-
 		m_ptDragStart = ptMouse;
 	}
 }

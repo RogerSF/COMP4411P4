@@ -53,3 +53,28 @@ bool PointLargerXCompare::operator()(const Point & first, const Point & second) 
 
 	return hasLargerX;
 }
+
+Point & operator+(const Point & first, const Point & second)
+{
+	return Point(first.x + second.x, first.y + second.y);
+}
+
+Point & operator-(const Point & first, const Point & second)
+{
+	return Point(first.x - second.x, first.y - second.y);
+}
+
+Point & operator*(const Point & point, const float& f)
+{
+	return Point(point.x*f, point.y*f);
+}
+
+Point & operator*(const float& f, const Point & point)
+{
+	return Point(point.x*f, point.y*f);
+}
+
+Point & operator/(const Point & point, const float& f)
+{
+	return Point(point.x/f, point.y/f);
+}

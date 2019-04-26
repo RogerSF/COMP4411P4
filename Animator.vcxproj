@@ -147,6 +147,10 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BezierCurveEvaluator.cpp" />
+    <ClCompile Include="BSplineCurveEvaluator.cpp" />
+    <ClCompile Include="C2InterpolatingCurveEvaluator.cpp" />
+    <ClCompile Include="CatmullRomSplinesEvaluator.cpp" />
     <ClCompile Include="curve.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -263,6 +267,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BezierCurveEvaluator.h" />
+    <ClInclude Include="BSplineCurveEvaluator.h" />
+    <ClInclude Include="C2InterpolatingCurveEvaluator.h" />
+    <ClInclude Include="CatmullRomSplinesEvaluator.h" />
     <ClInclude Include="curve.h" />
     <ClInclude Include="curveevaluator.h" />
     <ClInclude Include="linearcurveevaluator.h" />

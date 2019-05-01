@@ -13,7 +13,7 @@ Bells and Whistles
 
 - [X] Let the user control the tension of the Catmull-Rom spline
 - [] Implement higher degree polynomial splines (ones that are C3 or C4 continuous)
-- [] Implement one of the standard subdivision curves (e.g., Lane-Riesenfeld or Dyn-Levin-Gregory).
+- [X] Implement one of the standard subdivision curves (e.g., Lane-Riesenfeld or Dyn-Levin-Gregory).
 - [] Allow the user to specify the derivatives at the two endpoints of your C2 interpolating curves.
 - [] Add options to the user interface to enforce C0 or C1 continuity between adjacent Bézier curve segments automatically. (It should also be possible to override this feature in cases where you don't want this type of continuity.)
 - [] Add the ability to add a new control point to any curve type without changing the curve at all.

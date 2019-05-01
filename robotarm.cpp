@@ -243,8 +243,8 @@ void MegamanModel::drawMegamanModel()
 			glPushMatrix();
 			glTranslated(0, 4, 1.25);
 			glRotated(-90, 0, 1, 0);
-			glRotated(rightArmFlex, 0, 1, 0);
-			glRotated(rightArmSideFlex, 1, 0, 0);
+			glRotated(VAL(RIGHT_ARM_FLEX), 0, 1, 0);
+			glRotated(VAL(RIGHT_ARM_SIDE_FLEX), 1, 0, 0);
 			if (VAL(LV_DETAIL) >= 1) {
 				drawCylinder(3, 1, 1);
 			}
@@ -257,7 +257,7 @@ void MegamanModel::drawMegamanModel()
 				setMegamanColor(megamanType, false);
 				glPushMatrix();
 				glTranslated(0, 0, 3);
-				glRotated(rightForearmFlex, 0, 1, 0);
+				glRotated(VAL(RIGHT_FOREARM_FLEX), 0, 1, 0);
 				if (VAL(LV_DETAIL) >= 2) {
 					drawCylinder(3, 1.2, 1.2);
 				}
@@ -277,7 +277,7 @@ void MegamanModel::drawMegamanModel()
 				setMegamanColor(megamanType, false);
 				glPushMatrix();
 				glTranslated(0, 0, 3);
-				glRotated(leftForearmFlex, 0, -1, 0);
+				glRotated(VAL(LEFT_FOREARM_FLEX), 0, -1, 0);
 				if (VAL(LV_DETAIL) >= 2) {
 					drawCylinder(2.5, 1.2, 1.8);
 				}
@@ -312,8 +312,8 @@ void MegamanModel::drawMegamanModel()
 			glPushMatrix();
 			glTranslated(4, 4, 1.25);
 			glRotated(90, 0, 1, 0);
-			glRotated(leftArmFlex, 0, -1, 0);
-			glRotated(leftArmSideFlex, 1, 0, 0);
+			glRotated(VAL(LEFT_ARM_FLEX), 0, -1, 0);
+			glRotated(VAL(LEFT_ARM_SIDE_FLEX), 1, 0, 0);
 			if (VAL(LV_DETAIL) >= 1) {
 				drawCylinder(3, 1, 1);
 			}
@@ -325,7 +325,7 @@ void MegamanModel::drawMegamanModel()
 				setMegamanColor(megamanType, false);
 				glPushMatrix();
 				glTranslated(0, 0, 3);
-				glRotated(leftForearmFlex, 0, -1, 0);
+				glRotated(VAL(LEFT_FOREARM_FLEX), 0, -1, 0);
 				if (VAL(LV_DETAIL) >= 2) {
 					drawCylinder(2.5, 1.2, 1.5);
 				}
@@ -355,7 +355,7 @@ void MegamanModel::drawMegamanModel()
 				setMegamanColor(megamanType, false);
 				glPushMatrix();
 				glTranslated(0, 0, 3);
-				glRotated(leftForearmFlex, 0, -1, 0);
+				glRotated(VAL(LEFT_FOREARM_FLEX), 0, -1, 0);
 				if (VAL(LV_DETAIL) >= 2) {
 					drawCylinder(2.5, 1.2, 1.8);
 				}

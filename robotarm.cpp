@@ -147,6 +147,8 @@ void MegamanModel::draw()
 	glDisable(GL_STENCIL_TEST);                        //Disable Stencil test
 
 	drawMegamanModel();
+
+	endDraw();
 }
 
 void MegamanModel::drawMegamanModel()

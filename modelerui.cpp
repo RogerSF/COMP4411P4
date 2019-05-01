@@ -254,6 +254,8 @@ void ModelerUI::cb_fps(Fl_Slider* o, void* v)
 inline void ModelerUI::cb_degree_i(Fl_Slider*, void*)
 {
 	degree(m_psldrDegree->value());
+	m_pwndGraphWidget->invalidateAllCurves();
+	m_pwndGraphWidget->redraw();
 }
 
 void ModelerUI::cb_degree(Fl_Slider* o, void* v)
@@ -370,6 +372,10 @@ inline void ModelerUI::cb_curveType_i(Fl_Choice*, void*)
 {
 	m_pwndGraphWidget->currCurveType(m_pchoCurveType->value());
 	m_pwndGraphWidget->redraw();
+	if (m_pwndGraphWidget->currCurveType() == CURVE_TYPE_LANERIESENFELD)
+		m_psldrDegree->activate();
+	else
+		m_psldrDegree->deactivate();
 }
 
 void ModelerUI::cb_curveType(Fl_Choice* o, void* v) 

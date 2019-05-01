@@ -126,7 +126,7 @@ ModelerUIWindows::ModelerUIWindows() {
 			  o->type(5);
               o->labelsize(12);
 			  o->minimum(1);
-			  o->maximum(20);
+			  o->maximum(8);
 			  o->step(1);
 			  o->value(2);
 			  o->user_data((void*)(this));

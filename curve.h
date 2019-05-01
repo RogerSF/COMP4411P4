@@ -52,10 +52,10 @@ public:
 
 	void toStream(std::ostream& output_stream) const;
 	void fromStream(std::istream& input_stream);
+	void reevaluate(void) const;
 
 protected:
 	void init(const float fStartYValue = 0.0f);
-	void reevaluate(void) const;
 	// this must be called when a control point is added
 	void sortControlPoints(void) const;
 

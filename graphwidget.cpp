@@ -858,8 +858,10 @@ void GraphWidget::wrapCurve(int iCurve, bool bWrap)
 
 void GraphWidget::invalidateAllCurves()
 {
-	for (int i = 0; i < m_pcrvvCurves.size(); ++i)
+	for (int i = 0; i < m_pcrvvCurves.size(); ++i) {
 		m_pcrvvCurves[i]->invalidate();
+		m_pcrvvCurves[i]->reevaluate();
+	}
 }
 
 const Curve* GraphWidget::curve(int iCurve) const

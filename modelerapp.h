@@ -62,6 +62,9 @@ public:
 	// Return the current fps
 	int GetFps();
 
+	// Return the degree
+	int GetDegree();
+
 	// Returns animating flag
 	bool Animating();
 

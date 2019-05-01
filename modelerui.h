@@ -37,6 +37,8 @@ public:
 	void animate(bool bAnimate);
 	int fps();
 	void fps(int fps);
+	int degree();
+	void degree(int degree);
 	bool simulate() const;
 	void simulate(bool bSimulate);
 	void redrawModelerView();
@@ -60,6 +62,7 @@ private:
 	bool m_bAnimating;
 	bool m_bSaveMovie;
 	int m_iFps;
+	int m_iDegree;
 	float m_fPlayStartTime, m_fPlayEndTime;
 	std::string m_strMovieFileName;
 	int m_iMovieFrameNum;
@@ -94,6 +97,8 @@ private:
 	static void cb_aniLen(Fl_Menu_*, void*);
 	inline void cb_fps_i(Fl_Slider*, void*);
 	static void cb_fps(Fl_Slider*, void*);
+	inline void cb_degree_i(Fl_Slider*, void*);
+	static void cb_degree(Fl_Slider*, void*);
 	inline void cb_m_modelerWindow_i(Fl_Window*, void*);
 	static void cb_m_modelerWindow(Fl_Window*, void*);
 	static void cb_sliders(Fl_Widget* o, void* v);

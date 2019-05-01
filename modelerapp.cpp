@@ -152,6 +152,11 @@ int ModelerApplication::GetFps()
 	return m_ui->fps();
 }
 
+int ModelerApplication::GetDegree()
+{
+	return m_ui->degree();
+}
+
 bool ModelerApplication::Animating()
 {
 	return m_animating;

@@ -111,6 +111,9 @@
     <ClCompile Include="BezierCurveEvaluator.cpp">
       <Filter>Source Files\Curves</Filter>
     </ClCompile>
+    <ClCompile Include="LaneRiesenfeldSplinesEvaluator.cpp">
+      <Filter>Source Files\Curves</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="curve.h">
@@ -183,6 +186,9 @@
       <Filter>Header Files\Curves.</Filter>
     </ClInclude>
     <ClInclude Include="CatmullRomSplinesEvaluator.h">
+      <Filter>Header Files\Curves.</Filter>
+    </ClInclude>
+    <ClInclude Include="LaneRiesenfeldSplinesEvaluator.h">
       <Filter>Header Files\Curves.</Filter>
     </ClInclude>
   </ItemGroup>

@@ -52,6 +52,7 @@ public:
   RulerWindow *m_pwndVRuler;
   GraphWidget *m_pwndGraphWidget;
   Fl_Choice *m_pchoCurveType;
+  Fl_Value_Slider *m_psldrDegree;
   static Fl_Menu_Item menu_m_pchoCurveType[];
   Fl_Light_Button *m_pbtWrap;
   Fl_Button *m_pbtZoomAll;

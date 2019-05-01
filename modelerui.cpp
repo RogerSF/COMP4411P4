@@ -251,6 +251,16 @@ void ModelerUI::cb_fps(Fl_Slider* o, void* v)
 	((ModelerUI*)(o->user_data()))->cb_fps_i(o,v);
 }
 
+inline void ModelerUI::cb_degree_i(Fl_Slider*, void*)
+{
+	degree(m_psldrDegree->value());
+}
+
+void ModelerUI::cb_degree(Fl_Slider* o, void* v)
+{
+	((ModelerUI*)(o->user_data()))->cb_degree_i(o, v);
+}
+
 void ModelerUI::cb_sliders(Fl_Widget* o, void* v)
 {
 	ModelerUI* pui = (ModelerUI*)o->user_data();
@@ -621,6 +631,11 @@ void ModelerUI::activeCurvesChanged()
 	else {
 		m_pbtWrap->deactivate();
 	}
+
+	if (m_pwndGraphWidget->currCurveType() == CURVE_TYPE_LANERIESENFELD)
+		m_psldrDegree->activate();
+	else
+		m_psldrDegree->deactivate();
 }
 
 void ModelerUI::currTime(float fTime) 
@@ -867,10 +882,21 @@ void ModelerUI::fps(const int iFps)
 	m_iFps = iFps;
 }
 
+int ModelerUI::degree()
+{
+	return m_iDegree;
+}
+
+void ModelerUI::degree(const int iDegree)
+{
+	m_iDegree = iDegree;
+}
+
 ModelerUI::ModelerUI() : 
 m_iCurrControlCount(0), 
 m_pcbfValueChangedCallback(NULL),
 m_iFps(30),
+m_iDegree(2),
 m_bAnimating(false),
 m_bSaveMovie(false)
 {
@@ -908,6 +934,7 @@ m_bSaveMovie(false)
 	m_pbtLoop->callback((Fl_Callback*)cb_loop);
 	m_pbtSimulate->callback((Fl_Callback*)cb_simulate);
 	m_psldrFPS->callback((Fl_Callback*)cb_fps);
+	m_psldrDegree->callback((Fl_Callback*)cb_degree);
 
 	m_pwndMainWnd->callback((Fl_Callback*)cb_hide);
 	m_pwndMainWnd->when(FL_HIDE);

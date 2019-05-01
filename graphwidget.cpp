@@ -25,10 +25,11 @@
 #include "GraphWidget.h"
 
 #include "LinearCurveEvaluator.h"
- #include "BezierCurveEvaluator.h"
+#include "BezierCurveEvaluator.h"
 #include "BSplineCurveEvaluator.h"
 #include "CatmullRomSplinesEvaluator.h"
 #include "C2InterpolatingCurveEvaluator.h"
+#include "LaneRiesenfeldSplinesEvaluator.h"
 
 using namespace std;
 
@@ -126,7 +127,7 @@ m_flcCurrCurve(FL_BLACK)
 	m_ppceCurveEvaluators[CURVE_TYPE_CATMULLROM] = new CatmullRomSplinesEvaluator();
 	// Note that C2-Interpolating curve is not a requirement
 	m_ppceCurveEvaluators[CURVE_TYPE_C2INTERPOLATING] = new C2InterpolatingCurveEvaluator();
-
+	m_ppceCurveEvaluators[CURVE_TYPE_LANERIESENFELD] = new LaneRiesenfeldSplinesEvaluator();
 }
 
 GraphWidget::~GraphWidget()

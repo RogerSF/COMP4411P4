@@ -33,8 +33,9 @@
 #define MEGAMAN_SKIN 1.0f, 0.8667f, 0.7647f
 
 #define FIREMAN_LIGHT 0.588f, 0.592f, 0.5608f
-
 #define FIREMAN_DARK 0.9294f, 0.2627f, 0.15686f
+
+#define MIRROR_COLOR 0.8f, 1.0f, 1.0f
 
 // To make a MegamanModel, we inherit off of ModelerView
 class MegamanModel : public ModelerView 
@@ -44,6 +45,7 @@ public:
         : ModelerView(x,y,w,h,label) {}
 
     virtual void draw();
+	void drawMegamanModel();
 
 	void addCustomLighting();
 	// void animateStep();
@@ -105,14 +107,50 @@ void MegamanModel::draw()
 {
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // Set the background to white
 
-    // This call takes care of a lot of the nasty projection 
-    // matrix stuff.  Unless you want to fudge directly with the 
+	// This call takes care of a lot of the nasty projection 
+	// matrix stuff.  Unless you want to fudge directly with the 
 	// projection matrix, don't bother with this ...
-    ModelerView::draw();
 
 	// this->addCustomLighting(); //Whistle No.1
 	// this->animateStep();
+	ModelerView::draw();
 
+	glClearStencil(0);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);	//Clear the buffers
+
+	// Mirror reflection stuff
+	// Disable color and depth buffers
+	glDepthMask(false);													//Disable writting in depth buffer
+
+	glEnable(GL_STENCIL_TEST);												//Enable Stencil test
+	glStencilFunc(GL_ALWAYS, 1, 1);									//Test always success, value written 1
+	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);								//Stencil & Depth test passes => replace existing value
+
+	// Draw reflection plane
+	glPushMatrix();
+		setDiffuseColor(MIRROR_COLOR);
+		glTranslated(-5, -5, 10);
+		drawBox(10, 10, 0.1);
+	glPopMatrix();
+
+	glDepthMask(true);
+
+	glStencilFunc(GL_EQUAL, 1, 1);                   //Draw only where stencil buffer is 1
+	glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);    //Stencil buffer read only
+
+	glPushMatrix();
+		glTranslated(0, 0, 10);
+		glScalef(1.0f, 1.0f, -1.0f);                        //Mirror Z
+		drawMegamanModel();
+	glPopMatrix();
+
+	glDisable(GL_STENCIL_TEST);                        //Disable Stencil test
+
+	drawMegamanModel();
+}
+
+void MegamanModel::drawMegamanModel()
+{
 	int megamanType = VAL(MEGAMAN_TYPE);
 
 	// draw the sample model

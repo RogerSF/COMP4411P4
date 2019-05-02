@@ -8,7 +8,7 @@
 #include "modelerapp.h"
 #include "modelerdraw.h"
 #include "particleSystem.h"
-
+#include "Eigen/Dense"
 
 #include <FL/gl.h>
 #include <stdlib.h>
@@ -20,6 +20,15 @@
 #include <gl/glu.h>
 #include <complex>
 #include <algorithm>
+#include <iostream>
+#include <vector>
+
+#include "mat.h"
+#include "bitmap.h"
+
+using Eigen::MatrixXf;
+using Eigen::VectorXf;
+using namespace std;
 
 #define M_DEFAULT 2.0f
 #define M_OFFSET 3.0f
@@ -42,13 +51,19 @@ class MegamanModel : public ModelerView
 {
 public:
 	MegamanModel(int x, int y, int w, int h, char *label)
-        : ModelerView(x,y,w,h,label) {}
+        : ModelerView(x,y,w,h,label) {
+        	int fps = ModelerApplication::Instance()->GetFps();
+			ps = new ParticleSystem(fps, 30);
+			ModelerApplication::Instance()->SetParticleSystem(ps);
+
+        }
 
     virtual void draw();
 	void drawMegamanModel();
 
 	void addCustomLighting();
 	// void animateStep();
+	Vec4d getWorldCoodAtLeftHand(float local_x, float local_y, float local_z);
 	void setMegamanColor(int type, bool light);
 	void drawFace();
 
@@ -65,6 +80,9 @@ private:
 	float laserTransformFactor = 0;
 	bool showChargingEnergy = false;
 	bool showLaser = false;
+
+	ParticleSystem* ps;
+	// Mat4d leftHandOffSet;
 
 	float lerp(float a, float b, float f)
 	{
@@ -115,40 +133,50 @@ void MegamanModel::draw()
 	// this->animateStep();
 	ModelerView::draw();
 
-	glClearStencil(0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);	//Clear the buffers
 
-	// Mirror reflection stuff
-	// Disable color and depth buffers
-	glDepthMask(false);													//Disable writting in depth buffer
 
-	glEnable(GL_STENCIL_TEST);												//Enable Stencil test
-	glStencilFunc(GL_ALWAYS, 1, 1);									//Test always success, value written 1
-	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);								//Stencil & Depth test passes => replace existing value
+	
+	if (VAL(MIRROR) == 1) {
+		glClearStencil(0);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);	//Clear the buffers
 
-	// Draw reflection plane
-	glPushMatrix();
+		// Mirror reflection stuff
+		// Disable color and depth buffers
+		glDepthMask(false);													//Disable writting in depth buffer
+
+		glEnable(GL_STENCIL_TEST);												//Enable Stencil test
+		glStencilFunc(GL_ALWAYS, 1, 1);									//Test always success, value written 1
+		glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);								//Stencil & Depth test passes => replace existing value
+
+		// Draw reflection plane
+		glPushMatrix();
 		setDiffuseColor(MIRROR_COLOR);
 		glTranslated(-5, -5, 10);
 		drawBox(10, 10, 0.1);
-	glPopMatrix();
+		glPopMatrix();
 
-	glDepthMask(true);
+		glDepthMask(true);
 
-	glStencilFunc(GL_EQUAL, 1, 1);                   //Draw only where stencil buffer is 1
-	glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);    //Stencil buffer read only
+		glStencilFunc(GL_EQUAL, 1, 1);                   //Draw only where stencil buffer is 1
+		glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);    //Stencil buffer read only
 
-	glPushMatrix();
+		glPushMatrix();
 		glTranslated(0, 0, 10);
 		glScalef(1.0f, 1.0f, -1.0f);                        //Mirror Z
 		drawMegamanModel();
-	glPopMatrix();
+		glPopMatrix();
 
-	glDisable(GL_STENCIL_TEST);                        //Disable Stencil test
+		glDisable(GL_STENCIL_TEST);
 
-	drawMegamanModel();
+		drawMegamanModel();
+		endDraw();
+	}
+	else {
+		drawMegamanModel();
+	}
+	
 
-	endDraw();
+
 }
 
 void MegamanModel::drawMegamanModel()
@@ -159,6 +187,12 @@ void MegamanModel::drawMegamanModel()
 	setDiffuseColor(COLOR_GREEN);
 	glPushMatrix();
 	glTranslated(VAL(XPOS), VAL(YPOS), VAL(ZPOS));
+
+		Mat4d OffSetOfModel = { 1,0,0,VAL(XPOS),
+		0,1,0,VAL(YPOS),
+		0,0,1,VAL(ZPOS)+1,
+		0,0,0,1 };
+		ps->setTranslationMatrix(OffSetOfModel);
 
 		// MEGAMAN: BODY
 		setMegamanColor(megamanType, true);
@@ -629,12 +663,14 @@ void MegamanModel::drawFace() {
         glEnd();
 }
 
+
 int main()
 {
 	// Initialize the controls
 	// Constructor is ModelerControl(name, minimumvalue, maximumvalue, 
 	// stepsize, defaultvalue)
     ModelerControl controls[NUMCONTROLS];
+	controls[MIRROR] = ModelerControl("Using Mirror", 0, 1, 1, 0);
     controls[XPOS] = ModelerControl("X Position", -5, 5, 0.1f, 0);
     controls[YPOS] = ModelerControl("Y Position", 0, 5, 0.1f, 0);
     controls[ZPOS] = ModelerControl("Z Position", -5, 5, 0.1f, 0);

@@ -13,22 +13,29 @@
  * particles and forces) to build your system.
  */
 
+
 #ifndef __PARTICLE_SYSTEM_H__
 #define __PARTICLE_SYSTEM_H__
 
 #include "vec.h"
+#include "mat.h"
+#include "particle.h"
+#include "modelerdraw.h"
 
+#include <iostream>
+#include <string>
+#include <iterator>
+#include <FL/gl.h>
+#include <GL/glu.h>
 
 
 class ParticleSystem {
 
 public:
 
-
-
 	/** Constructor **/
 	ParticleSystem();
-
+	ParticleSystem(int fps, int max);
 
 	/** Destructor **/
 	virtual ~ParticleSystem();
@@ -62,7 +69,11 @@ public:
 	// of baked particles (without leaking memory).
 	virtual void clearBaked();	
 
+	// This function gets the shot of particles at t
+	virtual Particle* getParticlesAt(float t);
 
+	virtual Vec4d getWorldCoordAt(float local_x, float local_y, float local_z);
+	virtual void drawParticleAt(float world_x, float world_y, float world_z);
 
 	// These accessor fxns are implemented for you
 	float getBakeStartTime() { return bake_start_time; }
@@ -72,24 +83,36 @@ public:
 	bool isDirty() { return dirty; }
 	void setDirty(bool d) { dirty = d; }
 
-
+	void setTranslationMatrix(const Mat4d& transMatrix);
 
 protected:
 	
-
+	int numberOfParticle;
+	int maxNumberOfParticle;
 
 	/** Some baking-related state **/
-	float bake_fps;						// frame rate at which simulation was baked
+	float bake_fps;							// frame rate at which simulation was baked
 	float bake_start_time;				// time at which baking started 
-										// These 2 variables are used by the UI for
-										// updating the grey indicator 
-	float bake_end_time;				// time at which baking ended
+														// These 2 variables are used by the UI for
+														// updating the grey indicator 
+	float bake_end_time;					// time at which baking ended
 
 	/** General state variables **/
-	bool simulate;						// flag for simulation mode
-	bool dirty;							// flag for updating ui (don't worry about this)
+	bool simulate;								// flag for simulation mode
+	bool dirty;									// flag for updating ui (don't worry about this)
 
+	Vec3f forceByWind;
+	bool directionOfWindIsLeft;
+
+	// float* state;
+	std::vector<float> state;
+	std::vector<float> mass;
+	std::vector<Vec3f> force;
+	std::vector<Particle*> shots_of_particles;
+	Mat4d translationMatrix;
 };
 
 
 #endif	// __PARTICLE_SYSTEM_H__
+
+

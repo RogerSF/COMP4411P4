@@ -10,6 +10,7 @@
 // of the controls from the user interface.
 enum SampleModelControls
 { 
+	MIRROR,
 	XPOS, 
 	YPOS, 
 	ZPOS,

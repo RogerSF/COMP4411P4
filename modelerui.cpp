@@ -538,6 +538,7 @@ inline void ModelerUI::cb_clearSim_i(Fl_Button* o, void* v)
 	ParticleSystem* ps = ModelerApplication::Instance()->GetParticleSystem();
 	if (ps) {
 		ps->clearBaked();
+		ps->resetSimulation(currTime());
 		m_pwndIndicatorWnd->rangeMarkerEnabled(false);
 		m_pwndIndicatorWnd->redraw();
 	}
@@ -559,6 +560,19 @@ void ModelerUI::cb_loop(Fl_Light_Button* o, void* v)
 
 inline void ModelerUI::cb_simulate_i(Fl_Light_Button* o, void*) 
 {
+	ParticleSystem* ps = ModelerApplication::Instance()->GetParticleSystem();
+	if (ps != NULL) {
+		if (ps->isSimulate() != m_pbtSimulate->value()) {
+			if (m_pbtSimulate->value()) {
+				cout << "call start from ui" << endl;
+				ps->startSimulation(currTime());
+			}
+			else {
+				cout << "call end from ui" << endl;
+				ps->stopSimulation(currTime());
+			}
+		}
+	}
 }
 
 void ModelerUI::cb_simulate(Fl_Light_Button* o, void* v) 
